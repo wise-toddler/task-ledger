@@ -14,8 +14,8 @@ import sys,json; s=json.load(sys.stdin); c=s['spec']['template']['spec']['contai
 print('rev', s['status']['latestReadyRevisionName'], 'image', c['image'].split(':')[-1][:12])
 keys=sys.argv[1:]; env={e['name']:e.get('value') for e in c.get('env',[])}
 [print(k,'=',env.get(k)) for k in keys]" "$@" ;;
-  flagsync)   # flagsync <flag-substring> — last syncs touching the flag + anything after
-    gh run list --repo emergentbase/experiments --workflow sync-unleash.yml --limit 15 --json createdAt,conclusion,displayTitle --jq ".[] | \"\(.createdAt[0:16]) \(.conclusion) \(.displayTitle[0:90])\"" | { grep -i "$2" || true; } ;;
+  flagsync)   # flagsync <owner/repo> <workflow.yml> <flag-substring> — last syncs touching the flag + anything after
+    gh run list --repo "$2" --workflow "$3" --limit 15 --json createdAt,conclusion,displayTitle --jq ".[] | \"\(.createdAt[0:16]) \(.conclusion) \(.displayTitle[0:90])\"" | { grep -i "$4" || true; } ;;
   cron)       # cron — list session crons (informational; CronList is a session tool)
     echo "use the CronList tool in-session" ;;
   *) echo "types: pr deploy cloudrun flagsync cron" >&2; exit 2 ;;

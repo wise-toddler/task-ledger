@@ -50,7 +50,7 @@ Rules the CLI enforces (do not argue with them, fix the state):
 
 `scripts/ledger_web.py [--port 9099] [--open]` — read-only live view: bucket cards + DAG (solid = dep, dotted = parent), click a node for history. Polls every 1.5s, keeps the last good read through a mid-write tear.
 
-`scripts/verify_recipes.sh <type> …` — canned verify one-liners: `pr <repo> <num> [sha]` · `deploy <ssh> <ctx> <ns> <name>` · `cloudrun <ssh> <project> <service> [ENV…]` · `flagsync <substr>`.
+`scripts/verify_recipes.sh <type> …` — canned verify one-liners: `pr <repo> <num> [sha]` · `deploy <ssh> <ctx> <ns> <name>` · `cloudrun <ssh> <project> <service> [ENV…]` · `flagsync <owner/repo> <workflow.yml> <substr>`. `ledger_web.py` links `repo#123` under `https://github.com/$LEDGER_GH_ORG/`.
 
 ## Write discipline
 

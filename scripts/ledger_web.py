@@ -311,7 +311,7 @@ h3.sec{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--
 <script>
 const $=s=>document.querySelector(s), E=(t,a)=>Object.assign(document.createElement(t),a||{});
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const GH='https://github.com/emergentbase/';
+const GH='https://github.com/__GH_ORG__/';
 const linkify=s=>esc(s)
   .replace(/(https?:\/\/[^\s<)\]]+)/g,'<a href="$1" target=_blank rel=noreferrer>$1</a>')
   .replace(/\b([a-z][a-z0-9-]{2,})#(\d{2,6})\b/g,'<a href="'+GH+'$1/pull/$2" target=_blank rel=noreferrer>$1#$2</a>');
@@ -748,7 +748,7 @@ class H(http.server.BaseHTTPRequestHandler):
                 pass  # mid-write tear: serve the last good read
             body, ctype = H.good, "application/json"
         else:
-            body, ctype = PAGE.encode(), "text/html; charset=utf-8"
+            body, ctype = PAGE.replace("__GH_ORG__", os.environ.get("LEDGER_GH_ORG", "")).encode(), "text/html; charset=utf-8"
         self.send_response(200); self.send_header("Content-Type", ctype); self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
 
 SAFE = re.compile(r"[\w.-]{1,40}")                                        # ids, priorities, owner names
