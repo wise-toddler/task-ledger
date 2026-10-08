@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" 2>/dev/null || exit 0; echo \"[task-ledger] classify this message as NEW TASK (ledger add, BEFORE any work) | STATUS (ledger verify, then report) | CLOSE (ledger close --evidence).\"; python3 .claude/skills/task-ledger/scripts/ledger.py hot 2>/dev/null | head -14; exit 0",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

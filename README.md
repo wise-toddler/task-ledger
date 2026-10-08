@@ -21,3 +21,11 @@ python3 .claude/skills/task-ledger/scripts/ledger.py hot
 - `scripts/verify_recipes.sh`: canned verify one-liners
 - `scripts/ledger_v1.py`: reader for the old markdown ledger
 - `references/`: design notes (v2 proposal, DAG design, operator and robustness lenses)
+
+## Hook (required for the protocol to stick)
+
+The skill alone only runs when the agent remembers to call it. A `UserPromptSubmit` hook makes every user message start with the ledger: it prints the classify reminder (new task | status | close) and the current HOT view into the agent's context.
+
+Merge `hooks/user-prompt-submit.json` into `.claude/settings.local.json` (per checkout) or `~/.claude/settings.json` (everywhere). Adjust the `ledger.py` path if the skill is not under `.claude/skills/task-ledger`. Then open `/hooks` once or restart Claude Code so the hook loads.
+
+At session start and after every context compaction the agent should also run `python3 .claude/skills/task-ledger/scripts/ledger.py hot` itself; the hook covers the per-message part only.
